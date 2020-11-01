@@ -13,4 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('teste', 'TesteController@testeFunc');
+Route::get('flightGrouping', 'FlightController@index');
