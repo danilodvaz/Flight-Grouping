@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
 class FlightController extends Controller
@@ -13,41 +12,47 @@ class FlightController extends Controller
 
     public function index()
     {
-		$outboundFlights = $this->getFlights(self::OUTBOUND_FLIGHTS);
-		$inboundFlights = $this->getFlights(self::INBOUND_FLIGHTS);
+		try {
+			$outboundFlights = $this->getFlights(self::OUTBOUND_FLIGHTS);
+			$inboundFlights = $this->getFlights(self::INBOUND_FLIGHTS);
 
-		$flightGrouping = $this->getFlightGrouping($outboundFlights, $inboundFlights);
+			$flightGrouping = $this->getFlightGrouping($outboundFlights, $inboundFlights);
 
-		return response()->json($flightGrouping);
+			return response()->json($flightGrouping);
+		} catch(\Exception $e) {
+			return response()->json([
+				"error" => $e->getMessage()
+			]);
+		}
 	}
 	
 	private function getFlights($filter = null)
 	{
-		// Adicionar try catch, testando o retorno pra erro na url
-		$query = $filter ? "?$filter=1" : '';
+		try {
+			$query = $filter ? "?$filter=1" : '';
+			
+			$guzzleClient = new Client();
+			
+			$response = $guzzleClient->get(self::API_URL . $query);
+			$statusCode = $response->getStatusCode();
+			if ($statusCode <> 200) {
+				throw new \Exception();
+			}
 
-		$guzzleClient = new Client();
-		
-    	$response = $guzzleClient->get(self::API_URL . $query);
-    	$statusCode = $response->getStatusCode();
-		$flights = $response->getBody()->getContents();
-		
-		return json_decode($flights, true);
-	}
+			$flights = $response->getBody()->getContents();
 
-	private function getFlightsPreparedArray($flights)
-	{
-		$fareGroup = array();
-
-		foreach ($flights as $flight) {
-			$fareGroup[$flight['fare']][$flight['price']][] = array('id' => $flight['id']);
+			return json_decode($flights, true);
+		} catch(\Exception $e) {
+			throw new \Exception("Não foi possível acessar a API para consultar os voos.");
 		}
-
-		return $fareGroup;
 	}
 
 	private function getFlightGrouping($outboundFlights, $inboundFlights)
 	{
+		if (empty($outboundFlights) || empty($inboundFlights)) {
+			throw new \Exception("Não foram encontrados voos de ida e/ou volta.");
+		}
+
 		$flights = array_merge($outboundFlights, $inboundFlights);
 
 		$outboundFlightsPrepared = $this->getFlightsPreparedArray($outboundFlights);
@@ -57,6 +62,17 @@ class FlightController extends Controller
 		$flightGrouping = $this->buildFlightGrouping($flights, $grouping);
 
 		return $flightGrouping;
+	}
+
+	private function getFlightsPreparedArray($flights)
+	{
+		$preparedArray = array();
+
+		foreach ($flights as $flight) {
+			$preparedArray[$flight['fare']][$flight['price']][] = array('id' => $flight['id']);
+		}
+
+		return $preparedArray;
 	}
 
 	private function buildGrouping($outboundFlightsPrepared, $inboundFlightsPrepared)
@@ -71,6 +87,10 @@ class FlightController extends Controller
 				$groupingFare = $this->buildGroupingFare($uniqueId, $outboundFlightsPrices, $inboundFlightsPrices);
 				$grouping = array_merge($grouping, $groupingFare);
 			}
+		}
+
+		if (empty($grouping)) {
+			throw new \Exception("Não foram encontrados voos de ida e volta com a mesma tarifa.");
 		}
 
 		usort($grouping, function($groupA, $groupB) { return ($groupA['totalPrice'] <=> $groupB['totalPrice']); });		
