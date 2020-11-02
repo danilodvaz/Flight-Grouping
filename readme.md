@@ -10,6 +10,7 @@
 - [Rotas](#rotas)
   - [Requisição](#requisição)
   - [Retorno](#retorno)
+- [Postman](#postman)
 
 ## Descrição
 
@@ -109,3 +110,7 @@ Descrição detalhada da estrutura de retorno:
 | totalFlights | "Integer" | "Número total de voos que realmente foram utilizados para montar os grupos" |
 | cheapestPrice | "Float" | "Valor do grupo mais barato" |
 | cheapestGroup | "Integer" | "Identificador único do grupo com o valor mais barato" |
+
+## Postman
+
+A documentação também pode ser encontrada no Postman no [link](https://documenter.getpostman.com/view/13333287/TVYM5GDY#agrupamento-de-voos).
