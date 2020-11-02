@@ -1,72 +1,52 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## Agrupamento de Voos
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+---
+- [Descrição](#descrição)
+  - [Regras](#regras)
+  - [Atenção](#atenção)
+- [Instalação](#instalação)
+  - [Clonar projeto](#clonar-projeto)
+  - [Instalar dependências](#instalar-dependências)
+  - [Iniciar servidor](#iniciar-servidor)
+---
 
-## About Laravel
+### Descrição
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A API Agrupamento de Voos realiza uma consulta, em uma API externa, que retorna diversos voos e faz o agrupamento dos mesmos. É retornado um JSON com o resultado ordenado pelo menor preço do grupo.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### Regras
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O grupo pode ser formado por vários voos de ida e de volta respeitando as seguintes regras:
 
-## Learning Laravel
+- O grupo deve ter pelo menos uma opção de ida e de volta.
+- A tarifa de todos os voos do grupo deve ser a mesma.
+- O valor total do grupo não pode sofrer alterações com as combinações dos valores dos voos de ida e de volta.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Atenção
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para fazer as combinações, a API leva em consideração apenas a tarifa e os valores dos voos. Não foi levado em consideração a origem e o destino de cada voo, assim como os horários de partida e chegada.
 
-## Laravel Sponsors
+### Instalação
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Trata-se de uma API REST desenvolvida utilizando Laravel 5.8 e PHP 7.4.11. Portanto, para utilizar a API é necessário ter o [PHP](https://www.php.net/downloads.php) e o [Composer](https://getcomposer.org/download/) instalados.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+#### Clonar projeto
 
-## Contributing
+Com o ambiente preparado, clone o projeto utilizando o comando:
+```
+git clone https://github.com/danilodvaz/Flight-Grouping.git
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Instalar dependências
 
-## Security Vulnerabilities
+Depois de clonado, acesse o diretório raiz do projeto e instale as dependências utilizando o gerenciador de dependências Composer:
+```
+composer install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Iniciar servidor
 
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Após o termino da instalação das dependências, ainda no diretório raiz, execute o seguinte comando para iniciar o servidor:
+```
+php artisan serve
+```
