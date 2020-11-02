@@ -113,4 +113,4 @@ Descrição detalhada da estrutura de retorno:
 
 ## Postman
 
-A documentação também pode ser encontrada no Postman no [link](https://documenter.getpostman.com/view/13333287/TVYM5GDY#agrupamento-de-voos).
+A documentação também pode ser encontrada no Postman acessando o [link](https://documenter.getpostman.com/view/13333287/TVYM5GDY#agrupamento-de-voos).
