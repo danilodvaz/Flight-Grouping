@@ -92,3 +92,20 @@ Após realizar a requisição, a API irá consultar e processar os voos, retorna
     "cheapestGroup": "Identificador único do grupo com o valor mais barato"
 }
 ```
+
+Descrição detalhada da estrutura de retorno:
+
+| Campo | Tipo | Descrição |
+| --- | :---: | --- |
+| flights | "Array" | "Array de objetos com todos os voos que foram retornados na cosulta da API" |
+| groups | "Array" | "Array de objetos com os grupos formados" |
+| groups->uniqueId | "Integer" | "Identificador único do grupo" |
+| groups->totalPrice | "Float" | "Valor das combinações de voos de ida e de volta do grupo" |
+| groups->outbound | "Array" | "Array de objetos com os identificadores dos voos de ida" |
+| groups->outbound->id | "Integer" | "Identificador do voo de ida" |
+| groups->inbound | "Array" | "Array de objetos com os identificadores dos voos de volta" |
+| groups->inbound->id | "Integer" | "Identificador do voo de volta" |
+| totalGroups | "Integer" | "Número total de grupos gerados" |
+| totalFlights | "Integer" | "Número total de voos que realmente foram utilizados para montar os grupos" |
+| cheapestPrice | "Float" | "Valor do grupo mais barato" |
+| cheapestGroup | "Integer" | "Identificador único do grupo com o valor mais barato" |
