@@ -15,7 +15,7 @@ class FlightController extends Controller
 		try {
             /*
             / Foram realizadas duas requisições para consumir a API apenas para explorar mais o código.
-            / Uma boa , neste caso, seria realizar apenas uma.
+            / Uma boa prática, neste caso, seria realizar apenas uma.
             */
 			$outboundFlights = $this->getFlights(self::OUTBOUND_FLIGHTS);
 			$inboundFlights = $this->getFlights(self::INBOUND_FLIGHTS);
