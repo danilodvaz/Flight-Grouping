@@ -13,6 +13,10 @@ class FlightController extends Controller
     public function index()
     {
 		try {
+            /*
+            / Foram realizadas duas requisições para consumir a API apenas para explorar mais o código.
+            / Uma boa , neste caso, seria realizar apenas uma.
+            */
 			$outboundFlights = $this->getFlights(self::OUTBOUND_FLIGHTS);
 			$inboundFlights = $this->getFlights(self::INBOUND_FLIGHTS);
 
